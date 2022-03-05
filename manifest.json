@@ -1,0 +1,26 @@
+{
+  "name": "QueryTabs New Version",
+  "version": "2.0",
+  "manifest_version": 3,
+  "permissions": [
+    "tabs",
+    "storage",
+    "unlimitedStorage"
+  ],
+  "action": {
+    "default_icon": "tabs.png",
+    "default_title": "QueryTabs"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "commands": {
+    "open-manage-page": {
+      "suggested_key": {
+        "default": "Alt + N"
+      },
+      "description": "Open management page."
+    }
+  }
+}

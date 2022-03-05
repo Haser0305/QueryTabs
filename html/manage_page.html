@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>QueryTabs</title>
+
+    <link href="../css/jquery-ui.min.css" type="text/css" rel="stylesheet">
+    <link href="../css/manage.css" type="text/css" rel="stylesheet">
+
+
+</head>
+
+<body>
+<h1>Hello~~ This is Query Tabs management page</h1>
+
+<div class="settings">
+    <div class="setting-item-div">
+        <input id="remove-check" class="setting-item" type="checkbox" name="remove" checked>
+        <label for="remove-check">關閉頁面</label>
+    </div>
+    <div class="setting-item-div">
+        <input id="accordion-check" class="setting-item" type="checkbox" name="accordion" checked>
+        <label for="accordion-check">群組摺疊</label>
+    </div>
+    <div class="setting-item-div">
+        <input id="accordion-active-check" class="setting-item" type="checkbox" name="accordion_active" checked>
+        <label for="accordion-active-check">群組預設開啟</label>
+    </div>
+    <div class="setting-item-div">
+        <input id="group-accordion-default-check" class="setting-item" type="checkbox" name="accordion_active_default" disabled>
+        <label for="group-accordion-default-check">群組摺疊紀錄</label>
+    </div>
+
+
+</div>
+
+<div id="content" class="content"></div>
+
+
+<div id="update-description">
+    <p id="update-description-content"></p>
+</div>
+
+<script src="../js/jquery-3.5.1.min.js"></script>
+<script src="../js/jquery-ui.min.js"></script>
+<script src="../js/manage.js"></script>
+<script src="../js/add_listener.js"></script>
+</body>
+
+</html>

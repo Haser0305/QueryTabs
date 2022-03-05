@@ -1,0 +1,129 @@
+* {
+    font-family: Microsoft JhengHei, serif;
+}
+
+.settings {
+    /*position: absolute;*/
+    /*right:0;*/
+    float: right;
+    margin-bottom: 10px;
+}
+
+#content {
+    /*position: absolute;*/
+    /*top: 150px;*/
+    width: 96vw;
+    clear: both;
+}
+
+.time-div {
+    margin-bottom: 5vh;
+    width: 100%;
+}
+
+.group-row {
+    width: 100%;
+}
+
+.group-info {
+    width: 100%;
+    /*display: inline;*/
+}
+
+.group-info * {
+    display: inline-block;
+}
+
+.div-name {
+    /* margin-left: 10px; */
+    /* padding-left: 10px; */
+    color: darkgray;
+}
+
+.group-input {
+    font-size: 28px;
+    outline: 0 solid transparent;
+    margin-right: 20px;
+    /* padding-right: 10px; */
+}
+
+[contenteditable]:empty::before {
+    content: "Gruop Name";
+    color: rgba(0, 0, 0, 0.2);
+}
+
+
+button {
+    width: 80px;
+    height: 30px;
+    margin: 3px 5px;
+    background-color: #f3eded;
+    /*opacity: 0.7;*/
+    border: none;
+    border-radius: 6px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+
+.url-icon {
+    width: 18px;
+}
+
+
+.tab-row {
+    margin: 10px auto;
+}
+
+.row-incognito {
+    background-color: #d2d2d2;
+}
+
+img {
+    margin: auto 5px;
+}
+
+.delete-icon {
+    width: 10px;
+    display: none;
+}
+
+.delete-icon:hover {
+    cursor: pointer;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    /*margin-left: 5px;*/
+    font-size: 16px;
+}
+
+
+input {
+    border: 0;
+    outline: none;
+}
+
+/*for jquery accordion*/
+.ui-state-active {
+    color: black;
+    width: 100%;
+}
+.ui-accordion-header.ui-state-active {
+    background-color: #f6f6f6;
+    border-color: #f6f6f6;
+    width: 100%;
+}
+
+.ui-accordion .ui-accordion-header {
+    padding:0;
+    width: 100%;
+}
+
+.ui-accordion .ui-accordion-content {
+    padding: 2px 4px;
+    width: 100%;
+}

@@ -18,7 +18,7 @@
   "commands": {
     "open-manage-page": {
       "suggested_key": {
-        "default": "Alt + N"
+        "default": "Alt + L"
       },
       "description": "Open management page."
     }

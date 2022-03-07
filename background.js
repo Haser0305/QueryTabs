@@ -22,7 +22,7 @@ chrome.action.onClicked.addListener((tab) => {
     })
 })
 
-chrome.runtime.onMessage.addListener( (message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     if (message.target === 'update list') {
         chrome.storage.local.get(['tabs'], (response) => {
@@ -55,9 +55,42 @@ chrome.runtime.onMessage.addListener( (message, sender, sendResponse) => {
     return true;
 })
 
-chrome.runtime.onInstalled.addListener(() => {
+chrome.runtime.onInstalled.addListener(async () => {
     console.log('Hello!');
-    check_profile();
+    let response = await check_profile();
+
+    if (response.tabs) {
+        await chrome.storage.local.set({'backup': response.tabs});
+        let new_tabs = [];
+        for (let group of response.tabs) {
+            let new_group = {
+                id: -1,
+                data: [],
+                group_name: '',
+                time: '',
+                accordion: true
+            };
+
+            new_group['id'] = group['id'];
+            new_group['group_name'] = group['group_name'];
+            new_group['time'] = group['time'];
+
+            for (let data of group['data']) {
+                new_group['data'].push({
+                    favIconUrl: data['icon'] ? data['icon'] : data['favIconUrl'],
+                    incognito: data['incognito'],
+                    title: data['title'],
+                    url: data['url']
+                })
+            }
+            new_tabs.push(new_group);
+        }
+
+        await chrome.storage.local.set({'tabs': new_tabs});
+
+        console.log('transfer to new version.');
+    }
+
 })
 
 chrome.commands.onCommand.addListener(async (command) => {
@@ -148,7 +181,7 @@ function add_list(tabs, window) {
             }
 
             if (tab_list_add.data[0]) {
-                tab_list.push(tab_list_add);
+                tab_list.unshift(tab_list_add);
                 chrome.storage.local.set({
                     tabs: tab_list
                 }, () => {
@@ -185,7 +218,12 @@ function update_settings() {
         if (!settings) {
             init_profile('settings');
         }
-        remove_bool = settings.remove;
+        try {
+            remove_bool = settings.remove;
+        } catch (e) {
+            remove_bool = true;
+        }
+
     })
 }
 
@@ -213,18 +251,18 @@ function init_profile(profile_type) {
 async function check_profile() {
     return new Promise(resolve => {
         console.log('check data....');
-    let profile_data = ['version', 'tabs', 'settings'];
-    chrome.storage.local.get(profile_data, (response_data) => {
-        console.log(response_data);
-        for (let i of profile_data) {
-            if (!(i in response_data)) {
-                console.log(i, ' has no data.');
-                init_profile(i);
+        let profile_data = ['version', 'tabs', 'settings'];
+        chrome.storage.local.get(profile_data, (response_data) => {
+            console.log(response_data);
+            for (let i of profile_data) {
+                if (!(i in response_data)) {
+                    console.log(i, ' has no data.');
+                    init_profile(i);
+                }
             }
-        }
-        console.log('detected data exist.');
-        resolve(response_data);
-    })
+            console.log('detected data exist.');
+            resolve(response_data);
+        })
     })
 }
 

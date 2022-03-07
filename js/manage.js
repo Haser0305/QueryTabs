@@ -167,7 +167,7 @@ function AddEvent() {
     // event after editing group name.
     $("div[contenteditable]").focusout((data) => {
         update_list.push($(data.target).parents(".time-div")[0].id)
-        UpdateTableNew("tab");
+        UpdateGroup("tab");
     })
 
     $("img.delete-icon").on("click", (click_event) => {
@@ -338,7 +338,7 @@ function AddHover() {
     });
 }
 
-function CreateTableNewVersion(data) {
+function CreateGroups(data) {
     let temp_data = JSON.stringify(data);
     temp_data = JSON.parse(temp_data);
     let $tabs = $("#content");
@@ -413,7 +413,7 @@ function CreateTableNewVersion(data) {
             // console.log(ui);
             update_list.push($(ui.item[0]).parents(".time-div")[0].id);
             setTimeout(() => {
-                UpdateTableNew("tab");
+                UpdateGroup("tab");
             }, 200);
         }
     }).disableSelection();
@@ -423,7 +423,7 @@ function CreateTableNewVersion(data) {
         axis: "y",
         handle: ".div-name",
         stop: (() => {
-            UpdateTableNew("group");
+            UpdateGroup("group");
         })
     });
     if (settings.accordion) {
@@ -450,7 +450,9 @@ function CreateTableNewVersion(data) {
     }
 }
 
-// Deprecated
+/**
+ * @deprecated
+ */
 function OpenTabs(group_id) {
 
     let group = tab_list.find(element => element.id == group_id);
@@ -593,7 +595,7 @@ function UpdateTabListById(id, updateData) {
     }
 }
 
-function UpdateTableNew(type) {
+function UpdateGroup(type) {
 
     if (type === "tab") {
         let id;
@@ -656,9 +658,8 @@ function DeleteData(button) {
     let row = $(button).parents('div')[0];
     update_list.push($(button).parents(".time-div")[0].id);
     $(row).remove();
-    UpdateTableNew("tab");
+    UpdateGroup("tab");
 }
-
 
 function DeleteGroup(group_id) {
     console.log("delete group ", group_id);
@@ -678,7 +679,6 @@ function DeleteGroup(group_id) {
 
 }
 
-
 function UpdateToChrome() {
     chrome.storage.local.set({tabs: tab_list}, () => {
         chrome.runtime.sendMessage({target: 'update list'})
@@ -686,7 +686,7 @@ function UpdateToChrome() {
 }
 
 // Listener
-chrome.runtime.onMessage.addListener((message, sender,sendResponse) => {
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log(message);
     if (message.target === 'refresh') {
         sendResponse('ok');
@@ -721,7 +721,7 @@ $(function () {
         $("#accordion-active-check")[0].checked = settings.accordion_active;
 
 
-        CreateTableNewVersion(tab_list);
+        CreateGroups(tab_list);
         AddHover();
 
         // prevent enter in the div
@@ -764,7 +764,7 @@ $(function () {
                     if (!settings.accordion_active) {
                         $('#group-accordion-default-check').removeAttr('disabled');
                     }
-                    CreateTableNewVersion(tab_list);
+                    CreateGroups(tab_list);
                     AddHover();
                     // prevent enter in the div where group name there.
                     $('div[contenteditable]').keydown(function (e) {

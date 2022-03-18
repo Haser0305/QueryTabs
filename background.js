@@ -12,11 +12,6 @@ let latest_version = 2.0;
 chrome.action.onClicked.addListener((tab) => {
     chrome.tabs.query({currentWindow: true}, (tabs) => {
         chrome.windows.getCurrent((window) => {
-            console.log(tabs);
-            console.log(window);
-            // chrome.storage.local.get(['tabs'], (response) => {
-            //     let tab_list = response.tabs ? response.tabs : [];
-            // })
             add_list(tabs, window);
         })
     })
@@ -31,26 +26,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     } else if (message.target === 'update settings') {
         update_settings();
     } else if (message.target === 'init profile') {
-
-
-        //todo can not return asynchronous function.
-
-        // let response = await check_profile();
-        // console.warn(response);
-        // check_profile().then(response => {
-        //     console.warn(response);
-        //     // sendResponse(response);
-        //     sendResponse('.....');
-        // });
-
-        // sendResponse('response');
-
         (async () => {
             let response = await check_profile();
             sendResponse(response);
         })();
-
-
     }
     return true;
 })
@@ -106,7 +85,6 @@ chrome.commands.onCommand.addListener(async (command) => {
             } else {
                 chrome.windows.create({
                     url: "html/manage_page.html"
-                    // incognito: true
                 });
             }
         })

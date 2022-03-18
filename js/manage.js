@@ -18,112 +18,6 @@ let managePageID = 0;
 
 let debug = false;
 
-let temp_data_new_version = {
-    settings: settings,
-    tabs: [
-        {
-            id: "12323223",
-            data: [
-                {
-                    favIconUrl: '../icon/web icon.png',
-                    title: 'title1',
-                    url: 'url1',
-                    incognito: false
-                }, {
-                    favIconUrl: '../icon/web icon.png',
-                    title: 'title2',
-                    url: 'url2',
-                    incognito: false
-                }, {
-                    favIconUrl: '../icon/web icon.png',
-                    title: 'title3',
-                    url: 'url3',
-                    incognito: false
-                }
-            ],
-            group_name: "1",
-            time: "2020年9月13日 23:45:12"
-        }, {
-            id: "12323224",
-            data: [
-                {
-                    favIconUrl: '../icon/web icon.png',
-                    title: 'title1',
-                    url: 'url1',
-                    incognito: false
-                }
-            ],
-            group_name: "2",
-            time: "2020年9月13日 23:45:12"
-        }, {
-            id: "1232323434",
-            data: [
-                {
-                    favIconUrl: '../icon/web icon.png',
-                    title: 'title1',
-                    url: 'url1',
-                    incognito: true
-                }, {
-                    favIconUrl: '../icon/web icon.png',
-                    title: 'title2',
-                    url: 'url2',
-                    incognito: true
-                }, {
-                    favIconUrl: '../icon/web icon.png',
-                    title: 'title3',
-                    url: 'url3',
-                    incognito: true
-                }, {
-                    favIconUrl: '../icon/web icon.png',
-                    title: 'title3',
-                    url: 'url6',
-                    incognito: true
-                }
-            ],
-            group_name: "3",
-            time: "2020年9月13日 23:45:12"
-        }, {
-            id: "123123123",
-            data: [
-                {
-                    favIconUrl: '../icon/web icon.png',
-                    title: 'title4',
-                    url: 'url4',
-                    incognito: false
-                }, {
-                    favIconUrl: '../icon/web icon.png',
-                    title: 'title5',
-                    url: 'url5',
-                    incognito: true
-                }, {
-                    favIconUrl: '../icon/web icon.png',
-                    title: 'title6',
-                    url: 'url6',
-                    incognito: false
-                }, {
-                    favIconUrl: '../icon/web icon.png',
-                    title: 'title7',
-                    url: 'url7',
-                    incognito: false
-                }, {
-                    favIconUrl: '../icon/web icon.png',
-                    title: 'title8',
-                    url: 'url8',
-                    incognito: true
-                }, {
-                    favIconUrl: '../icon/web icon.png',
-                    title: 'title9',
-                    url: 'url9',
-                    incognito: true
-                }
-            ],
-            group_name: "4",
-            time: "2020年9月15日 23:45:12"
-        }
-    ],
-    version: 1.0
-}
-
 let user_data = {
     settings: settings,
     tabs: [],
@@ -205,10 +99,6 @@ function AddEvent() {
         if (bool_incognito) {
 
             if (open_windowId_incognito) {
-                // chrome.tabs.create({
-                //     windowId: open_windowId_incognito,
-                //     url: target.href
-                // })
 
                 chrome.windows.create({
                     url: target.href
@@ -221,45 +111,16 @@ function AddEvent() {
                     incognito: true
                 }, (window1) => {
                     console.log(window1);
-                    // open_windowId_incognito = window.windowId;
                 })
             }
 
-            // Deprecated
-            // chrome.windows.getAll((response) => {
-            //     for (let i = 0; i < response.length; i++) {
-            //         if (response[i].incognito) {
-            //             window_id = response[i].id;
-            //             break;
-            //         }
-            //     }
-            //
-            //     if (window_id) {
-            //         chrome.tabs.create({
-            //             windowId: window_id,
-            //             url: click_event.target.href
-            //         })
-            //     } else {
-            //         chrome.windows.create({
-            //             url: click_event.target.href,
-            //             incognito: true
-            //         });
-            //     }
-            // })
-
         } else {
-            // chrome.tabs.create({
-            //     url: target.href
-            // })
-            //
 
             chrome.windows.create({
                 url: target.href
             }, (window_id) => {
             })
-
         }
-
         return false;
     })
 
@@ -292,10 +153,6 @@ function AddEvent() {
 
     let $group_input = $(".group-input");
 
-    // that group name can enter space but not effect accordion
-    // $(".group-input").keydown((e) => {
-    //     e.stopPropagation();
-    // })
     // prevent space key to collapse the accordion.
     $group_input.keydown((e) => {
         e.stopPropagation();
@@ -312,29 +169,11 @@ function AddHover() {
         let delete_icon = $(this).find(".delete-icon")[0];
         let img = $(this).find("img")[0];
 
-        // $(delete_icon).show();
         $(delete_icon).toggle();
-        // console.log(delete_icon);
-        // console.log(delete_icon);
-
-
-        // console.log($(this).find("td.url-icon"));
-        // let i = $(this).find("td.url-icon")[0];
-        // $(i).find("td.url-icon").width(12);
-        // $(i).width(200);
 
     }, function () {
         let icon = $(this).find(".delete-icon")[0];
-        // let img = $(this).find("img")[0];
-        // $(icon).hide();
-        // $(img).hide();
-
         icon.style.display = "none";
-
-        // let i = $(this).find("td.url-icon")[0];
-        // $(i).find("td.url-icon").width(12);
-        // $(i).width(12);
-
     });
 }
 
@@ -344,7 +183,7 @@ function CreateGroups(data) {
     let $tabs = $("#content");
 
     for (let group of temp_data) {
-        console.log(group);
+        // console.log(group);
         let row_elements = []; // This array for web data.
 
         group.data.forEach((element) => {
@@ -395,7 +234,6 @@ function CreateGroups(data) {
     }
 
 
-    // while (group = temp_data.pop())
     // page elements can drag and sort.
     $(".Sortable").sortable({
         connectWith: ".Sortable",
@@ -409,8 +247,6 @@ function CreateGroups(data) {
         },
         stop: function (event, ui) {
             $tabs.removeClass("dragging");
-            // console.log(event);
-            // console.log(ui);
             update_list.push($(ui.item[0]).parents(".time-div")[0].id);
             setTimeout(() => {
                 UpdateGroup("tab");
@@ -461,15 +297,6 @@ function OpenTabs(group_id) {
         return;
     }
 
-
-    // let incognito = false;
-    // if (tab_list[group_id].incognito) {
-    //     incognito = true;
-    // }
-
-    // let incognito = tab_list[group_id].incognito;
-
-    // let tabs = tab_list[group_id].data;
     let tabs = group.data;
 
     let window_id;
@@ -524,9 +351,6 @@ function OpenTabs(group_id) {
             clearInterval(interval);
         }
     }, 50)
-
-    // TODO group the tabs by chrome group feature.
-
 }
 
 async function Sleep(ms = 0) {
@@ -662,15 +486,12 @@ function DeleteData(button) {
 }
 
 function DeleteGroup(group_id) {
-    console.log("delete group ", group_id);
-
-    // let delete_div = $("#" + group_id)[0];
+    // console.log("delete group ", group_id);
 
     let div = $("#" + group_id)[0];
 
     $(div).remove();
 
-    // delete tab_list[group_id];
 
     let index = tab_list.findIndex(element => element.id == group_id);
     tab_list.splice(index, 1);
@@ -724,7 +545,7 @@ $(function () {
         CreateGroups(tab_list);
         AddHover();
 
-        // prevent enter in the div
+        // prevent enter key in the div
         $('div[contenteditable]').keydown(function (e) {
             // trap the return key being pressed
             if (e.keyCode === 13) {
@@ -766,7 +587,7 @@ $(function () {
                     }
                     CreateGroups(tab_list);
                     AddHover();
-                    // prevent enter in the div where group name there.
+                    // prevent enter key in the div where group name.
                     $('div[contenteditable]').keydown(function (e) {
                         // trap the return key being pressed
                         if (e.keyCode === 13) {
